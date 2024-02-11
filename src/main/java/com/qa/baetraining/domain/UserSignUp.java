@@ -5,6 +5,7 @@ public class UserSignUp {
     private String lastName;
     private String email;
     private String password;
+    private String profilePic;
     private String userName;
 
     // Getters
@@ -28,6 +29,10 @@ public class UserSignUp {
         return this.userName;
     }
 
+    public String getProfilePic() {
+        return this.profilePic;
+    }
+
     // Setters
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -48,10 +53,16 @@ public class UserSignUp {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+
     @Override
     public String toString() {
         return "UserSignUp [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password="
-                + password + ", userName=" + userName + "]";
+                + password + ", profilePic=" + profilePic + ", userName=" + userName + "]";
     }
 }
 

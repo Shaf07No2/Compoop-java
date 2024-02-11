@@ -1,16 +1,20 @@
 package com.qa.baetraining.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.qa.baetraining.domain.UserInformationSchema;
+import com.qa.baetraining.domain.UserPostWithPic;
 import com.qa.baetraining.domain.UserPosts;
 import com.qa.baetraining.domain.UserSignUp;
 import com.qa.baetraining.repo.UserPostsRepo;
-// import com.qa.baetraining.exceptions.UserNotFound;
-import com.qa.baetraining.repo.UserRepo;
+
+
 
 @Service
 public class UserPostsService {
@@ -19,9 +23,25 @@ public class UserPostsService {
 	public UserPostsService(UserPostsRepo repo) {
 		this.repo = repo;
 	}
+
+
 	
-	public List<UserPosts> findByUserId(long userId) {
-		return repo.findByUser_Id(userId);
+	public List<UserPostWithPic> findByUserId(long userId) {
+		// Sort sort = Sort.by(Sort.Direction.DESC, "date");
+		List<UserPosts> userPosts = repo.findByUser_Id(userId);
+		userPosts.sort(Comparator.comparing(UserPosts::getDate).reversed());
+		List<UserPostWithPic> userPostWithPics = new ArrayList<>();
+		for (UserPosts userPost : userPosts) {
+			UserPostWithPic userPostWithPic = new UserPostWithPic();
+			// Copy properties from UserPosts to UserPosts2
+			BeanUtils.copyProperties(userPost, userPostWithPic);
+		
+			userPostWithPic.setProfilePic(userPost.getProfilePic()); // 
+		
+			userPostWithPics.add(userPostWithPic);
+		
+		}
+		return userPostWithPics;
 	}
 
 	@Transactional

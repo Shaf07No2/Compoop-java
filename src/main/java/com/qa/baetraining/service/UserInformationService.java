@@ -59,7 +59,7 @@ public class UserInformationService {
 
 			if (userExists == null) {
 				this.repo.createUser(userSignUp.getFirstName(), userSignUp.getLastName(), userSignUp
-				.getEmail(), userSignUp.getPassword(), userSignUp.getUserName(), role);
+				.getEmail(), userSignUp.getPassword(), userSignUp.getUserName(), userSignUp.getProfilePic(), role);
 				return 200;
 			} else {
 				return 409;

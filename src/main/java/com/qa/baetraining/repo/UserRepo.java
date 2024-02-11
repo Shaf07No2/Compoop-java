@@ -39,8 +39,8 @@ public interface UserRepo extends JpaRepository<UserInformationSchema, Long> {
 	public UserInformationSchema userExistsQuery(String email, String userName);
 
 	@Modifying
-	@Query(value  = "INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, role) VALUES (:firstName, :lastName, :email, :password, :userName, :role)", nativeQuery = true)
-	public void createUser(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("email") String email, @Param("password") String password, @Param("userName") String userName, @Param("role") String role);
+	@Query(value  = "INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic,role) VALUES (:firstName, :lastName, :email, :password, :userName, :profilePic, :role)", nativeQuery = true)
+	public void createUser(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("email") String email, @Param("password") String password, @Param("userName") String userName, @Param("profilePic") String profilePic, @Param("role") String role);
 
 	@Query(value = "SELECT * FROM UserLogin.user_information_schema WHERE email = ?", nativeQuery = true)
 	public UserInformationSchema emailExistsQuery(String email);

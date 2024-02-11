@@ -27,6 +27,9 @@ public class UserInformationSchema {
 
 	@Column(name = "userName", length = 50, nullable = false) 
 	private String userName;
+	
+    @Column(name = "profilePic", length = 500, nullable = true) 
+	private String profilePic;
 
 	@Column(name = "role", length = 50, nullable = false) 
 	private String role;
@@ -34,17 +37,18 @@ public class UserInformationSchema {
 public UserInformationSchema() {
 }
 
-public UserInformationSchema(String firstName, String lastName, String email, String password, String userName, String role) {
+public UserInformationSchema(String firstName, String lastName, String email, String password, String userName, String profilePic, String role) {
     super();
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.profilePic = profilePic;
     this.role = role;
 }
 
-public UserInformationSchema(long id, String firstName, String lastName, String email, String password, String userName, String role) {
+public UserInformationSchema(long id, String firstName, String lastName, String email, String password, String userName, String profilePic, String role) {
     super();
     this.id = id;
     this.firstName = firstName;
@@ -52,7 +56,18 @@ public UserInformationSchema(long id, String firstName, String lastName, String 
     this.email = email;
     this.password = password;
     this.userName = userName;
+    this.profilePic = profilePic;
     this.role = role;
+}
+
+
+
+public String getProfilePic() {
+    return profilePic;
+}
+
+public void setProfilePic(String profilePic) {
+    this.profilePic = profilePic;
 }
 
 public long getId() {
@@ -119,6 +134,7 @@ public void setRole(String role){
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+        result = prime * result + ((profilePic == null) ? 0 : profilePic.hashCode());
         result = prime * result + ((role == null) ? 0 : role.hashCode());
         return result;
     }
@@ -159,6 +175,11 @@ public void setRole(String role){
                 return false;
         } else if (!userName.equals(other.userName))
             return false;
+        if (profilePic == null) {
+            if (other.profilePic != null)
+                return false;
+        } else if (!profilePic.equals(other.profilePic))
+            return false;
         if (role == null) {
             if (other.role != null)
                 return false;
@@ -166,4 +187,12 @@ public void setRole(String role){
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "UserInformationSchema [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
+                + email + ", password=" + password + ", userName=" + userName + ", profilePic=" + profilePic + ", role="
+                + role + "]";
+    }
+    
 }

@@ -1,23 +1,37 @@
-INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, role)
-SELECT 'test', 'profile', 'test@example.com',  'pwd123', 'testUsername', 'USER'
+-- 5 USERS
+
+INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic, role)
+SELECT 'test', 'profile', 'test@example.com',  'pwd123', 'testUsername', 'https://randomren.com/images/faces-of-india/2008-10-14_IMG_9489.jpg', 'USER'
 WHERE NOT EXISTS (
     SELECT * FROM UserLogin.user_information_schema WHERE email = 'test@example.com'
 );
 
-INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, role)
-SELECT 'test1', 'profile1', 'test1@example.com',  'pwd123', 'testUsername1', 'USER'
+INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic, role)
+SELECT 'Cooldude', 'Legend', 'Bro@example.com',  'pwd123', 'testUsername1', 'https://blenderartists.org/uploads/default/original/4X/f/7/a/f7a0a3a97695c83f4780973eb73b8f20ecc29df9.jpg','USER'
 WHERE NOT EXISTS (
     SELECT * FROM UserLogin.user_information_schema WHERE email = 'test1@example.com'
 );
 
-INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, role)
-SELECT 'test2', 'profile2', 'test2@example.com',  'pwd123', 'testUsername2', 'USER'
+INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic, role)
+SELECT 'Jackie', 'Ligma', 'Jackie@example.com',  'pwd123', 'samename1', 'https://preview.redd.it/tried-to-generate-a-random-face-with-ai-now-i-have-to-worry-v0-indsbidh39la1.jpg?width=640&crop=smart&auto=webp&s=9020f96f8079f3518c6617f97a6362b2fbeb744b', 'USER'
+WHERE NOT EXISTS (
+    SELECT * FROM UserLogin.user_information_schema WHERE email = 'samename@example.com'
+);
+
+INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic, role)
+SELECT 'Davine', 'Cole', 'davina@example.com',  'pwd123', 'Davina', 'https://1.img-dpreview.com/files/p/TS560x560~forums/63132016/2a1e59e12f4543bea10f2385259c81cf', 'USER'
 WHERE NOT EXISTS (
     SELECT * FROM UserLogin.user_information_schema WHERE email = 'test2@example.com'
 );
 
-INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, role)
-SELECT 'test3', 'profile3', 'test3@example.com',  'pwd123', 'testUsername2', 'USER'
+INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic, role)
+SELECT 'Davine', 'Johnson', 'ladyluck@example.com',  'pwd123', 'Danny', 'https://discoverymood.com/wp-content/uploads/2020/04/Mental-Strong-Women-min.jpg', 'USER'
+WHERE NOT EXISTS (
+    SELECT * FROM UserLogin.user_information_schema WHERE email = 'ladyluck@example.com'
+);
+
+INSERT INTO UserLogin.user_information_schema (first_name, last_name, email, password, user_name, profile_pic, role)
+SELECT 'Crazy', 'Dave', 'dave@example.com',  'pwd123', 'test3example', 'https://wink.messengergeek.com/uploads/default/original/2X/7/786d6dd4cc6df042c946e77da9146df8d2fadbfb.jpeg', 'USER'
 WHERE NOT EXISTS (
     SELECT * FROM UserLogin.user_information_schema WHERE email = 'test3@example.com'
 );
@@ -57,7 +71,9 @@ INSERT INTO UserLogin.user_posts (title, description, picture, user_id) VALUES (
 -- 
 -- inserting friends
 INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (1, 2);
+INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (1, 3);
 INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (1, 4);
+INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (1, 5);
 
 INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (2, 1);
 INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (2, 3);

@@ -1,5 +1,6 @@
 package com.qa.baetraining.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -16,8 +17,13 @@ public class UserFriendService {
 		this.repo = repo;
 	}
 	
+	public List<UserInformationSchema> findUsersByName(String firstName) {
+		return repo.findUsersByName(firstName);
+	}
+
 	public List<UserPosts> findAllFriendPostsByUserId(long userId) {
-		return repo.findAllFriendPostsByUserId(userId);
+		List<UserPosts> userPosts = repo.findAllFriendPostsByUserId(userId);userPosts.sort(Comparator.comparing(UserPosts::getDate).reversed());
+		return userPosts;
 	}
 
 	public List<UserInformationSchema> findAllFriendsByUserId(long userId) {

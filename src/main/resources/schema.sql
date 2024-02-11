@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS user_information_schema (
 	password VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
     user_name VARCHAR(50) NOT NULL,
+    profile_pic VARCHAR(500),
 	role VARCHAR(50) NOT NULL,
 	PRIMARY KEY (id)
 );

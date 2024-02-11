@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qa.baetraining.domain.UserPostWithPic;
 import com.qa.baetraining.domain.UserPosts;
 import com.qa.baetraining.domain.UserSignUp;
 import com.qa.baetraining.security.JwtTokenUtil;
@@ -54,16 +55,16 @@ public class UserPostsController {
 	private JwtTokenUtil jwtTokenUtil; 
 
 	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<UserPosts>> getAllPostsByUserId(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader) {
+	public ResponseEntity<List<UserPostWithPic>> getAllPostsByUserId(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader) {
 		try {
-			List<UserPosts> userPosts = service.findByUserId(userId);
+			List<UserPostWithPic> userPosts = service.findByUserId(userId);
 		
 			if (userPosts == null) {
-				return new ResponseEntity<List<UserPosts>>(HttpStatus.OK);
+				return new ResponseEntity<List<UserPostWithPic>>(HttpStatus.OK);
 			}
-			return new ResponseEntity<List<UserPosts>>(userPosts, HttpStatus.OK);
+			return new ResponseEntity<List<UserPostWithPic>>(userPosts, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<List<UserPosts>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<UserPostWithPic>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	@PostMapping("/create")

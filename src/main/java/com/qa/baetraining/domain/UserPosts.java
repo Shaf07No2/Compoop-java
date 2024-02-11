@@ -45,6 +45,7 @@ public UserPosts(long id, String title, String description, String picture, User
         this.description = description;
         this.picture = picture;
         this.user = user;
+       
 }
 
 public UserPosts(String title, String description, String picture, UserInformationSchema user, LocalDateTime date) {
@@ -56,6 +57,9 @@ public UserPosts(String title, String description, String picture, UserInformati
         this.date = date;
 }
 
+public String getProfilePic() {
+        return user.getProfilePic();
+    }
 
 public UserInformationSchema getUser() {
         return user;
@@ -107,9 +111,8 @@ public void setPicture(String picture) {
 
 @Override
 public String toString() {
-        return "UserPosts [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date
-                        + ", picture=" + picture + ", user=" + user + "]";
-}
+        return "UserPosts [id=" + id + ", title=" + title + ", description=" + description + ", picture=" + picture
+                        + ", user=" + user + ", date=" + date + "]";
 
-   
+}
 }

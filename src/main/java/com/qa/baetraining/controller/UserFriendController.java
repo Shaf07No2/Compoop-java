@@ -55,18 +55,18 @@ public class UserFriendController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil; 
 
-	// @GetMapping("/userfriends/{userId}")
-	// public ResponseEntity<List<String>> findAllFriendNamesByUserId(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader) {
-	// 	try {
-	// 		List<String> userFriends = service.findAllFriendNamesByUserId(userId);
-	// 		if (userFriends == null) {
-	// 			return new ResponseEntity<List<String>>(HttpStatus.OK);
-	// 		}
-	// 		return new ResponseEntity<List<String>>(userFriends, HttpStatus.OK);
-	// 	} catch (NoSuchElementException e) {
-	// 		return new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR);
-	// 	}
-	// }
+	@GetMapping("/search/{firstName}")
+	public ResponseEntity<List<UserInformationSchema>> findUsersByName(@PathVariable("firstName") String firstName, @RequestHeader("Authorization") String authHeader) {
+		try {
+			List<UserInformationSchema> userResults = service.findUsersByName(firstName);
+			if (userResults == null) {
+				return new ResponseEntity<List<UserInformationSchema>>(HttpStatus.OK);
+			}
+			return new ResponseEntity<List<UserInformationSchema>>(userResults, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<List<UserInformationSchema>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@GetMapping("/userfriends/{userId}")
 	public ResponseEntity<List<UserInformationSchema>> findAllFriendNamesByUserId(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader) {
