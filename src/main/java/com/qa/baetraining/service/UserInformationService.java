@@ -25,6 +25,10 @@ public class UserInformationService {
 	public UserInformationSchema findUserByEmail(String email) {
 		return repo.getUserByEmail(email);
 	}
+	
+	public UserInformationSchema findById(long id) {
+		return repo.findById(id);
+	}
 
 	public Long getIdByEmail(String userEmail) {
 		try{

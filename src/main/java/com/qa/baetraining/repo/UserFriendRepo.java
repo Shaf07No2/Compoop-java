@@ -36,8 +36,8 @@ public interface UserFriendRepo extends JpaRepository<UserFriend, UserFriend.Use
     List<UserInformationSchema> findUsersByName(@Param("firstName") String firstName);
 
 
-    @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName = :firstName")
-    List<UserInformationSchema> findUserProfileById(@Param ("firstName") String firstName);
+    // @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName = :id")
+    // List<UserInformationSchema> findUserProfileById(@Param ("id") String id);
 
 
     // Add friend

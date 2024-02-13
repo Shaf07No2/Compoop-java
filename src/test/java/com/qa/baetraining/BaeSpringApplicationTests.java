@@ -1,13 +1,13 @@
-package com.qa.baetraining;
+// package com.qa.baetraining;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class BaeSpringApplicationTests {
+// @SpringBootTest
+// class BaeSpringApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }

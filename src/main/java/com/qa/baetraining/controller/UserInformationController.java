@@ -33,6 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -68,32 +69,31 @@ public class UserInformationController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	@GetMapping("/allusers")
-	public ResponseEntity<List<UserInformationSchema>> allUsers() {
-		try {
-			List<UserInformationSchema> users = service.allUsers();
-			if (users.isEmpty()) {
-				return new ResponseEntity<List<UserInformationSchema>>(HttpStatus.NOT_FOUND);
-			}
-			return new ResponseEntity<List<UserInformationSchema>>(users, HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<List<UserInformationSchema>>(HttpStatus.NOT_FOUND);
-		}
-	}
+	// @PostMapping("/profile")
+	// public ResponseEntity<UserInformationSchema> findUserByUsername(@RequestHeader("Authorization") String authHeader) {
+	// 	String token = authHeader.substring(7).trim();
 
-	@PostMapping("/profile")
-	public ResponseEntity<UserInformationSchema> findUserByUsername(@RequestHeader("Authorization") String authHeader) {
-		String token = authHeader.substring(7).trim();
-		// System.out.println(token);
-		// System.out.println(authHeader);
-		// System.out.println(request);
+	// 	String email = jwtTokenUtil.getUsernameFromToken(token);
+
+
+	// 	try {
+	// 		UserInformationSchema user = service.findUserByEmail(email);
 		
-		String email = jwtTokenUtil.getUsernameFromToken(token);
-		// System.out.println("username= " + email);
-		// String userName = jwtTokenUtil.getUsernameFromToken(token);
-
+	// 		if (user == null) {
+	// 			return new ResponseEntity<UserInformationSchema>(HttpStatus.NOT_FOUND);
+	// 		}
+	// 		System.out.println(user);
+	// 		return new ResponseEntity<UserInformationSchema>(user, HttpStatus.OK);
+	// 	} catch (NoSuchElementException e) {
+	// 		return new ResponseEntity<UserInformationSchema>(HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+	// }
+	@PostMapping("/profile/{userId}")
+	public ResponseEntity<UserInformationSchema> findById(@PathVariable("userId") String id, @RequestHeader("Authorization") String authHeader) {
 		try {
-			UserInformationSchema user = service.findUserByEmail(email);
+			long formattedId = Long.parseLong(id);
+			System.out.println("finding by  ID for profile click");
+			UserInformationSchema user = service.findById(formattedId);
 		
 			if (user == null) {
 				return new ResponseEntity<UserInformationSchema>(HttpStatus.NOT_FOUND);

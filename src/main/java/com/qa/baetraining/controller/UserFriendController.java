@@ -68,19 +68,7 @@ public class UserFriendController {
 		}
 	}
 
-	@GetMapping("/userfriends/{userId}")
-	public ResponseEntity<List<UserInformationSchema>> findAllFriendNamesByUserId(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader) {
-		try {
-			System.out.println(userId);
-			List<UserInformationSchema> userFriends = service.findAllFriendsByUserId(userId);
-			if (userFriends == null) {
-				return new ResponseEntity<List<UserInformationSchema>>(HttpStatus.OK);
-			}
-			return new ResponseEntity<List<UserInformationSchema>>(userFriends, HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<List<UserInformationSchema>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	
 
 	@GetMapping("/home/{userId}")
 	public ResponseEntity<List<UserPosts>> findPostsByFriendsOfUser(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String authHeader) {
