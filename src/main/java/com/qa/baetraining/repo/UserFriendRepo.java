@@ -17,23 +17,28 @@ public interface UserFriendRepo extends JpaRepository<UserFriend, UserFriend.Use
     @Query("SELECT uf.friend FROM UserFriend uf WHERE uf.user.id = :userId")
     List<UserInformationSchema> findAllFriendsByUserId(@Param("userId") Long userId);
 
+    @Query("SELECT uf.friend FROM UserFriend uf WHERE uf.user.id = :userId AND uf.friend.id = :friendId")
+    UserInformationSchema findAFriendByUserId(@Param("userId") Long userId, @Param("friendId") Long friendId);
+
+    @Query("SELECT CASE WHEN (COUNT(uf) > 0) THEN true ELSE false END FROM UserFriend uf WHERE uf.user.id = :userId AND uf.friend.id = :friendId")
+    boolean existsFriendByUserId(@Param("userId") Long userId, @Param("friendId") Long friendId);
+
 
     @Query("SELECT p FROM UserFriend uf INNER JOIN UserPosts p ON uf.friend.id = p.user.id WHERE uf.user.id = :userId")
     List<UserPosts> findAllFriendPostsByUserId(@Param("userId") Long userId);
 
-    @Query(value = "SELECT * FROM UserLogin.user_information_schema WHERE first_name = ?", nativeQuery = true)
-    List<UserInformationSchema> findUsersByName0(String firstName);
+    @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName LIKE :firstName%")
+    List<UserInformationSchema> findUsersByName(@Param("firstName") String firstName);
+
+    // @Query(value = "SELECT * FROM UserLogin.user_information_schema WHERE first_name = ?", nativeQuery = true)
+    // List<UserInformationSchema> findUsersByName0(String firstName);
     
-    @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName = :firstName")
-    List<UserInformationSchema> findUsersByName1(@Param ("firstName") 
-    String firstName);
+    // @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName = :firstName")
+    // List<UserInformationSchema> findUsersByName1(@Param ("firstName") 
+    // String firstName);
 
     // @Query(value = "SELECT u FROM UserInformationSchema u WHERE LOWER(u.firstName) LIKE LOWER(:firstName)%")
     // List<UserInformationSchema> findUsersByName2(@Param("firstName") String firstName);
-
-
-    @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName LIKE :firstName%")
-    List<UserInformationSchema> findUsersByName(@Param("firstName") String firstName);
 
 
     // @Query(value = "SELECT u FROM UserInformationSchema u WHERE u.firstName = :id")

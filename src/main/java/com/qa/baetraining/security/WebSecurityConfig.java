@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll(). antMatchers("/auth/*", "/login", "/", "/profile", "/signup","/user/*", "/create", "/profile/*", "/home/*","/search/*").permitAll().anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
+        httpSecurity.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll(). antMatchers("/auth/*", "/login", "/", "/profile", "/signup","/user/*", "/create", "/profile/*", "/home/*","/search/*", "/requests/*", "/sendrequest/*").permitAll().anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
             Map<String, Object> responseMap = new HashMap<>();
             ObjectMapper mapper = new ObjectMapper();
             response.setStatus(401);

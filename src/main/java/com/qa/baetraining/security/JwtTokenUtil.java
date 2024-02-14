@@ -38,6 +38,25 @@ public class JwtTokenUtil implements Serializable {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    public Long getUserIdString(String token) {
+        Claims claim = Jwts.parserBuilder().setSigningKey(dotenv.get("ACCESS_TOKEN_SECRET")).build().parseClaimsJws(token).getBody();
+
+        Object requesterIdObj = claim.get("userId");
+        if (requesterIdObj != null) {
+            String requesterId = requesterIdObj.toString();
+            long formattedRequesterId = Long.parseLong(requesterId);
+            return formattedRequesterId;
+        } else {
+            System.out.println("requesterObject from claim is null");
+            return null;
+        }
+
+        // Extract the userId from the token
+        // String requesterId = (String) claim.get("userId");
+        // long formattedRequesterId = Long.parseLong(requesterId);
+        // return formattedRequesterId;
+    }
+
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }

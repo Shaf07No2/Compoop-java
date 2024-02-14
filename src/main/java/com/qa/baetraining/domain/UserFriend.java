@@ -49,9 +49,6 @@ public class UserFriend {
         public String toString() {
             return "UserFriendsId [userId=" + userId + ", friendId=" + friendId + "]";
         }
-
-        
-        
     }
 
     @EmbeddedId

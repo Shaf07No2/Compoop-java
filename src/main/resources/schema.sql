@@ -1,6 +1,8 @@
 -- DROP TABLE IF EXISTS user_information_schema CASCADE;
 
 DROP TABLE IF EXISTS UserLogin.reactions;
+DROP TABLE IF EXISTS UserLogin.user_follower_requests;
+
 DROP TABLE IF EXISTS UserLogin.user_posts;
 DROP TABLE IF EXISTS UserLogin.user_friend;
 DROP TABLE IF EXISTS UserLogin.user_friends;
@@ -36,5 +38,12 @@ CREATE TABLE IF NOT EXISTS user_posts (
     FOREIGN KEY (user_id) REFERENCES user_information_schema(id)
 );
 
+CREATE TABLE IF NOT EXISTS user_follower_requests (
+    user_id BIGINT,
+    requester_user_id BIGINT,
+    PRIMARY KEY (user_id, requester_user_id),
+    FOREIGN KEY (user_id) REFERENCES user_information_schema(id),
+    FOREIGN KEY (requester_user_id) REFERENCES user_information_schema(id)
+);
 
 

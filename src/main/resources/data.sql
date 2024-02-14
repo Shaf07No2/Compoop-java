@@ -78,4 +78,12 @@ INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (1, 5);
 INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (2, 1);
 INSERT INTO UserLogin.user_friend (user_id, friend_id) VALUES (2, 3);
 
--- INSERT INTO UserLogin.user_friends (user_id, friend_id) VALUES ('1', '3')
+-- inserting friend requests into the test user
+INSERT INTO UserLogin.user_follower_requests (user_id, requester_user_id) VALUES (1, 2);
+INSERT INTO UserLogin.user_follower_requests (user_id, requester_user_id) VALUES (1, 3);
+INSERT INTO UserLogin.user_follower_requests (user_id, requester_user_id) VALUES (1, 4);
+-- inserting friend requests into the cool user
+INSERT INTO UserLogin.user_follower_requests (user_id, requester_user_id) VALUES (2, 1);
+INSERT INTO UserLogin.user_follower_requests (user_id, requester_user_id) VALUES (2, 5);
+INSERT INTO UserLogin.user_follower_requests (user_id, requester_user_id) VALUES (2, 6);
+

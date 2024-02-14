@@ -3,6 +3,8 @@ package com.qa.baetraining.service;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.qa.baetraining.domain.UserInformationSchema;
@@ -29,5 +31,13 @@ public class UserFriendService {
 	public List<UserInformationSchema> findAllFriendsByUserId(long userId) {
 		return repo.findAllFriendsByUserId(userId);
 	}
+	public UserInformationSchema findAFriendByUserId(Long userId, Long friendId) {
+		return repo.findAFriendByUserId(userId, friendId);
+	}
+
+	public Boolean existsFriendByUserId(Long userId, Long friendId) {
+		return repo.existsFriendByUserId(userId, friendId);
+	}
+
 }
 

@@ -41,10 +41,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qa.baetraining.domain.UserFriend;
 import com.qa.baetraining.domain.UserInformationSchema;
 import com.qa.baetraining.domain.UserSignUp;
 import com.qa.baetraining.security.JwtRequestFilter;
 import com.qa.baetraining.security.JwtTokenUtil;
+import com.qa.baetraining.service.UserFriendService;
 import com.qa.baetraining.service.UserInformationService;
 
 // import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,9 +61,12 @@ import com.qa.baetraining.service.UserInformationService;
 public class UserInformationController {
 
 	public UserInformationService service;
+
+	public UserFriendService friendService;
 	
-	public UserInformationController(UserInformationService service) {
+	public UserInformationController(UserInformationService service, UserFriendService friendService) {
 		this.service = service;
+		this.friendService = friendService;
 	}
 
 	Dotenv dotenv = Dotenv.load();
@@ -69,36 +74,35 @@ public class UserInformationController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	// @PostMapping("/profile")
-	// public ResponseEntity<UserInformationSchema> findUserByUsername(@RequestHeader("Authorization") String authHeader) {
-	// 	String token = authHeader.substring(7).trim();
-
-	// 	String email = jwtTokenUtil.getUsernameFromToken(token);
-
-
-	// 	try {
-	// 		UserInformationSchema user = service.findUserByEmail(email);
-		
-	// 		if (user == null) {
-	// 			return new ResponseEntity<UserInformationSchema>(HttpStatus.NOT_FOUND);
-	// 		}
-	// 		System.out.println(user);
-	// 		return new ResponseEntity<UserInformationSchema>(user, HttpStatus.OK);
-	// 	} catch (NoSuchElementException e) {
-	// 		return new ResponseEntity<UserInformationSchema>(HttpStatus.INTERNAL_SERVER_ERROR);
-	// 	}
-	// }
 	@PostMapping("/profile/{userId}")
-	public ResponseEntity<UserInformationSchema> findById(@PathVariable("userId") String id, @RequestHeader("Authorization") String authHeader) {
+	public ResponseEntity<UserInformationSchema> findById(@PathVariable("userId") String friendId, @RequestHeader("Authorization") String authHeader) {
 		try {
-			long formattedId = Long.parseLong(id);
-			System.out.println("finding by  ID for profile click");
-			UserInformationSchema user = service.findById(formattedId);
-		
-			if (user == null) {
+			//this is the id of the random profile youre trying to view converted to long type
+			long formattedFriendId = Long.parseLong(friendId);
+
+			//extracting the requesters id from the token to check if the requester is friends with the profile they are trying to view
+			String token = authHeader.substring(7).trim();
+			long requesterId = jwtTokenUtil.getUserIdString(token);
+			
+
+			//searching to see if the profile belongs to anyone
+			UserInformationSchema friendUser = service.findById(formattedFriendId);
+
+			//if no user exist then return not found
+			if (friendUser == null) {
 				return new ResponseEntity<UserInformationSchema>(HttpStatus.NOT_FOUND);
+			} else if (formattedFriendId == requesterId) {
+				return new ResponseEntity<UserInformationSchema>(friendUser, HttpStatus.OK);
+			} else {
+				//here we check the user (friendID) to see if it exists against the requesterId (userId) in the UserFriend table.
+				Boolean areUsersFriends = friendService.existsFriendByUserId(requesterId, formattedFriendId);
+				if (areUsersFriends) {
+					return new ResponseEntity<UserInformationSchema>(friendUser, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<UserInformationSchema>(HttpStatus.UNAUTHORIZED);
+				}
 			}
-			return new ResponseEntity<UserInformationSchema>(user, HttpStatus.OK);
+			
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<UserInformationSchema>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -190,6 +194,25 @@ public class UserInformationController {
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	// @PostMapping("/profile")
+	// public ResponseEntity<UserInformationSchema> findUserByUsername(@RequestHeader("Authorization") String authHeader) {
+	// 	String token = authHeader.substring(7).trim();
+
+	// 	String email = jwtTokenUtil.getUsernameFromToken(token);
+
+
+	// 	try {
+	// 		UserInformationSchema user = service.findUserByEmail(email);
+		
+	// 		if (user == null) {
+	// 			return new ResponseEntity<UserInformationSchema>(HttpStatus.NOT_FOUND);
+	// 		}
+	// 		System.out.println(user);
+	// 		return new ResponseEntity<UserInformationSchema>(user, HttpStatus.OK);
+	// 	} catch (NoSuchElementException e) {
+	// 		return new ResponseEntity<UserInformationSchema>(HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+	// }
 }
 
 
